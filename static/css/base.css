@@ -55,7 +55,7 @@ h1 {
     position:fixed;top:-80px;
 }
 .main-info {
-    height:220px;
+    height: 90%;
     width: 50%;
     background: #527cfa;
     padding: 2em;

@@ -12,7 +12,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <link rel="stylesheet" href="/static/css/base.css?after"/>
     <style>
         {% block styles %}
         {% endblock styles %}
@@ -21,7 +21,6 @@
 <body class="text-center">
     {% block contents %}
     {% endblock contents %}
-
     {% block login %}
     <div class="bottom_menu">
         <div name="menu" value="1">
@@ -35,6 +34,61 @@
     <div class="bottom_main">
         <img src="/static/images/logo_bg.png" alt="logo" height="110" width="110"  onClick="location.href='/select/'" >
     </div>
+    {% block weather %}
+    <div class="main">
+        <div class="main-info">
+            <div class="weather-top">	
+                <div class="weather-grids">
+                    <h3 class="fri">{{weather.city}} </h3>
+                    <h3>FeelsLike {{weather.feelslike_weather}}</h3>
+                </div>
+                <div class="weather-grids weather-mdl">
+                    <img src="http://openweathermap.org/img/wn/{{weather.icon}}.png" alt="Image" width="100px">
+                </div>
+                <div class="weather-grids">
+                    <h4>Max {{weather.temperature_max}}°</h4>
+                    <h2>{{weather.temperature}}°</h2>
+                    <h4>Min {{weather.temperature_min}}°</h4>
+                </div>
+                <div class="clear"> </div>
+            </div>
+            <div class="weather-bottom">	
+                <ul>
+                    {% for x,y in forcast_data_list.items%}
+                    <li class="bg"><h4>
+                        {% if y.day == "Tuesday" %}
+                            화
+                        {% elif y.day == "Wednesday" %}
+                            수
+                        {% elif y.day == "Thursday" %}
+                            목
+                        {% elif y.day == "Friday" %}
+                            금
+                        {% elif y.day == "Saturday" %}
+                            토
+                        {% elif y.day == "Sunday" %}
+                            일
+                        {% elif y.day == "Monday" %}
+                            월
+                        {% endif %}
+                    </h4>
+                        <figure class="icons">
+    <!--							<canvas id="clear-night" width="40" height="40"></canvas>-->
+        <img src="http://openweathermap.org/img/wn/{{y.icon}}.png" alt="Image" width="100px">
+    
+                        </figure>
+                    </li>
+                    {% endfor%}
+                </ul>
+                <div class="clear"> </div>
+            </div>
+        </div>
+    </div>	
+    
+    {% endblock weather %}
+
     {% endblock login %}
+
+    
 </body>
 </html>

@@ -38,14 +38,18 @@ def main(request):
 def borrow(request):
     if Record.objects.filter(user_id=request.session['user'],borrow_status=1).exists():
         return redirect(select)
-    return render(request, 'server/borrow.html');
+    return render(request, 'server/borrow.html', forcast(request));
 def cur_status(request):
     bannaptmp=Record.objects.filter(user_id=request.session['user'],borrow_status=0)
+    context=forcast(request)
+    context['bannaptmp']=bannaptmp
     try:
         borrowtmp=Record.objects.get(user_id=request.session['user'],borrow_status=1)
-        return render(request, 'server/cur_status.html', {'borrowtmp':borrowtmp , 'bannaptmp':bannaptmp});
+        context['borrowtmp']=borrowtmp
+        return render(request, 'server/cur_status.html', context);
     except:
-        return render(request, 'server/cur_status.html', {'borrowtmp':0 , 'bannaptmp':bannaptmp});
+        context['borrowtmp']=0
+        return render(request, 'server/cur_status.html', context);
 
 def dasan(request):
     dasanu=Dasan.objects.all()
@@ -118,10 +122,10 @@ def test(request):
 
 
 def select(request):
-    return render(request, 'server/select.html');
+    return render(request, 'server/select.html',forcast(request));
 
 def bannap(request):
-    return render(request, 'server/bannap.html');
+    return render(request, 'server/bannap.html',forcast(request));
 
 def bannap_dasan(request):
     dasanu=Dasan.objects.all()
@@ -156,3 +160,70 @@ def open_door():
     
 
     
+import requests
+
+def forcast(request):
+    #daily data through API
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=d24d677a63969b3ec1671db99f1b0218'
+
+    # city variable change it to change the data. For ex. New York
+    city = 'Seoul'
+    city_weather = requests.get(url.format(city)).json()  # request the API data and convert the JSON to Python data types
+
+    #daily weather data
+    weather = {
+        'city': city,
+        'temperature': city_weather['main']['temp'],
+        'description': city_weather['weather'][0]['description'],
+        'icon': city_weather['weather'][0]['icon'],
+        'temperature_max': city_weather['main']['temp_max'] ,
+        'temperature_min':  city_weather['main']['temp_min']  ,
+        'feelslike_weather': city_weather['main']['feels_like']
+
+    }
+
+    #forcasted weather data API
+    v = 'http://api.openweathermap.org/data/2.5/forecast?q={}&&units=metric&appid=d24d677a63969b3ec1671db99f1b0218'
+    a = v.format(city)
+    #accessing the API json data
+    full = requests.get(a).json()
+
+    # today's date taking as int
+    day = datetime.today()
+    today_date = int(day.strftime('%d'))
+
+
+    forcast_data_list = {} # dictionary to store json data
+
+    #looping to get value and put it in the dictionary
+    for c in range(0, full['cnt']):
+        date_var1 = full['list'][c]['dt_txt']
+        date_time_obj1 = datetime.strptime(date_var1, '%Y-%m-%d %H:%M:%S')
+        # print the json data and analyze the data coming to understand the structure. I couldn't find the better way
+        # to process date
+        if int(date_time_obj1.strftime('%d')) == today_date or int(date_time_obj1.strftime('%d')) == today_date+1:
+            # print(date_time_obj1.strftime('%d %a'))
+            if int(date_time_obj1.strftime('%d')) == today_date+1:
+                today_date += 1
+            forcast_data_list[today_date] = {}
+            forcast_data_list[today_date]['day'] = date_time_obj1.strftime('%A')
+            forcast_data_list[today_date]['date'] = date_time_obj1.strftime('%d %b, %Y')
+            forcast_data_list[today_date]['time'] = date_time_obj1.strftime('%I:%M %p')
+            forcast_data_list[today_date]['FeelsLike'] = full['list'][c]['main']['feels_like']
+
+            forcast_data_list[today_date]['temperature'] = full['list'][c]['main']['temp']
+            forcast_data_list[today_date]['temperature_max'] = full['list'][c]['main']['temp_max']
+            forcast_data_list[today_date]['temperature_min'] = full['list'][c]['main']['temp_min']
+
+            forcast_data_list[today_date]['description'] = full['list'][c]['weather'][0]['description']
+            forcast_data_list[today_date]['icon'] = full['list'][c]['weather'][0]['icon']
+
+            today_date += 1
+        else:
+            pass
+    #returning the context with all the data to the index.html
+    context = {
+        'weather':weather, 'forcast_data_list':forcast_data_list
+    }
+
+    return context

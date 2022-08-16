@@ -55,7 +55,7 @@ h1 {
     position:fixed;top:-80px;
 }
 .main-info {
-    height: 90%;
+    height: 100%;
     width: 50%;
     background: #527cfa;
     padding: 2em;
@@ -65,6 +65,9 @@ h1 {
 .weather-grids {
     float: left;
     width: 33%;
+}
+.weather-top{
+    height:200px;
 }
 .weather-grids.weather-mdl {
     margin-top:20px;

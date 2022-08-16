@@ -1,9 +1,18 @@
 {% extends 'server/base.html' %}
 
+{% block styles %}
+.button_box{
+  width:100%;
+
+  margin-top:100%;
+}
+{% endblock styles %}
+
 {% block contents %}
 
-
-<button onClick="location.href='dasan/'">다산관</button>
-<button onClick="location.href='yangjae/'">양재관</button>
+<div class=button_box>
+    <button onClick="location.href='dasan/'">다산관</button>
+    <button onClick="location.href='yangjae/'">양재관</button>
+</div>
 
 {% endblock contents %}

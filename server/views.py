@@ -108,7 +108,7 @@ def dasan_result(request):
     num=request.GET.get('dasan_btn')
     print("1")
     print(datetime.now().date())
-    Record.objects.create(user_id=request.session['user'], borrow_date=datetime.now().date(), borrow_status=1)
+    Record.objects.create(user_id=request.session['user'], borrow_location="다산관", borrow_date=datetime.now().date(), borrow_status=1)
     dasantmp=Dasan.objects.get(dasan_no=num)
     dasantmp.used=0
     dasantmp.save()
@@ -139,6 +139,8 @@ def bannap_dasan_result(request):
     dasantmp.save()
     recordtmp=Record.objects.get(user_id=request.session['user'],borrow_status=1)
     recordtmp.borrow_status=0
+    recordtmp.bannap_location="다산관"
+    recordtmp.bannap_date=datetime.now().date()
     recordtmp.save()
     open_door()
     return redirect(bannap_dasan)

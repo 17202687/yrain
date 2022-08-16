@@ -1,7 +1,16 @@
 
 {% extends 'server/base.html' %}
-{% block contents %}
 
+
+{% block styles %}
+.current_borrow{
+  width:100%;
+
+  margin-top:100%;
+}
+{% endblock styles %}
+
+{% block contents %}
     <div class="current_borrow">
         {% if borrowtmp != 0 %}
             <div class="current_borrow_record">
@@ -18,7 +27,7 @@
                 {% if bannaptmp %}
                     {% for bannap in bannaptmp %}
                     <span>{{forloop.counter}}: {{bannap.borrow_date}}에 {{bannap.location}}에서
-                        우산을 대여하고, {{banmonth}}월 {{recordtmp.bannap_date.day}}일 {{bannap.location}}에서 우산을 반납했습니다.</span><br>
+                        우산을 대여하고, {{datetime}}월 {{recordtmp.bannap_date.day}}일 {{bannap.location}}에서 우산을 반납했습니다.</span><br>
                     {% endfor %}
                 {% else %}
                     <span>현재 반납 기록이 없습니다.</span>

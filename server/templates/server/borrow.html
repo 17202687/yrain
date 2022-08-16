@@ -1,6 +1,17 @@
 {% extends 'server/base.html' %}
+
+{% block styles %}
+.button_box{
+  width:100%;
+
+  margin-top:100%;
+}
+{% endblock styles %}
+
 {% block contents %}
-<button onClick="location.href='dasan/'">다산관</button>
-<button onClick="location.href='yangjae/'">양재관</button>
-<h5>우산 대여 서비스는 1회 1우산만 이용 가능</h5>
+<div class=button_box>
+    <button onClick="location.href='dasan/'">다산관</button>
+    <button onClick="location.href='yangjae/'">양재관</button>
+    <h5>우산 대여 서비스는 1회 1우산만 이용 가능</h5>
+</div>
 {% endblock contents %}

@@ -9,6 +9,11 @@ class Record(models.Model):
     borrow_date = models.DateField(blank=True, null=True)
     bannap_date = models.DateField(blank=True, null=True)
     borrow_status = models.IntegerField()
+    borrow_month = models.IntegerField(blank=True, null=True)
+    borrow_day = models.IntegerField(blank=True, null=True)
+    bannap_month = models.IntegerField(blank=True, null=True)
+    bannap_day = models.IntegerField(blank=True, null=True)
+
 
     class Meta:
         managed = False

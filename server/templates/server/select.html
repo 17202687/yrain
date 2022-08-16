@@ -2,14 +2,16 @@
 
 {% block styles %}
 .btn-primary{
-  width:100px;
-  margin-top:70%;
+  width:25%;
+
+  margin-top:100%;
 }
 {% endblock styles %}
 
 
 {% block contents %}
+<div>
 <button class="btn-primary"onClick="location.href='/borrow/'">대여</button>
-<button onClick="location.href='/bannap/'">반납</button>
-
+<button calss="btn-primary"onClick="location.href='/bannap/'">반납</button>
+</div>
 {% endblock contents %}

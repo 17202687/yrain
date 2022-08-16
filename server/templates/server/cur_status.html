@@ -14,7 +14,7 @@
     <div class="current_borrow">
         {% if borrowtmp != 0 %}
             <div class="current_borrow_record">
-                <span>{{borrowtmp.borrow_date}}에 {{borrowtmp.location}}에서 대여한 우산이
+                <span>{{borrowtmp.borrow_date}}, {{borrowtmp.borrow_location}}에서 대여한 우산이
                 하나 있습니다.</span>
             </div>
         {% else %}
@@ -26,8 +26,8 @@
             <div class="past_borrow_record">
                 {% if bannaptmp %}
                     {% for bannap in bannaptmp %}
-                    <span>{{forloop.counter}}: {{bannap.borrow_date}}에 {{bannap.location}}에서
-                        우산을 대여하고, {{datetime}}월 {{recordtmp.bannap_date.day}}일 {{bannap.location}}에서 우산을 반납했습니다.</span><br>
+                    <span>{{forloop.counter}}: {{bannap.borrow_date}}, {{bannap.borrow_location}}에서
+                        우산을 대여하고, {{bannap.bannap_date}}, {{bannap.bannap_location}}에서 우산을 반납했습니다.</span><br>
                     {% endfor %}
                 {% else %}
                     <span>현재 반납 기록이 없습니다.</span>

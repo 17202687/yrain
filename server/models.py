@@ -5,15 +5,11 @@ from django.db import models
 class Record(models.Model):
     record_no = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=10)
-    location = models.CharField(max_length=20, blank=True, null=True)
+    borrow_location = models.CharField(max_length=20, blank=True, null=True)
+    bannap_location = models.CharField(max_length=20, blank=True, null=True)
     borrow_date = models.DateField(blank=True, null=True)
     bannap_date = models.DateField(blank=True, null=True)
     borrow_status = models.IntegerField()
-    borrow_month = models.IntegerField(blank=True, null=True)
-    borrow_day = models.IntegerField(blank=True, null=True)
-    bannap_month = models.IntegerField(blank=True, null=True)
-    bannap_day = models.IntegerField(blank=True, null=True)
-
 
     class Meta:
         managed = False

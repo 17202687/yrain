@@ -3,16 +3,17 @@
 {% block styles %}
 .btn-primary{
   width:25%;
-  text-align:center;
+
   margin-top:100%;
 }
 {% endblock styles %}
 
 
 {% block contents %}
-<div style="text-align:center">
-{% comment %} <button class="btn-primary"onClick="location.href='/borrow/'">대여</button> {% endcomment %}
-<input onClick="location.href='/borrow/'"class="w-70 btn btn-lg btn-primary"style="width:70%; background-color: black; border-color:black;" value="대여">
-<button calss="btn-primary"onClick="location.href='/bannap/'">반납</button>
+<div>
+<button class="btn btn-primary"onClick="location.href='/borrow/'">대여</button>
+<button class="btn btn-primary"onClick="location.href='/bannap/'">반납</button>
 </div>
+
+
 {% endblock contents %}

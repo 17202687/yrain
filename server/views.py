@@ -87,7 +87,7 @@ def login(request):
             if(user.password==request.POST['password']):
                 response=render(request,'server/main.html')
                 request.session['user'] = user.user_id
-                return redirect(main)
+                return redirect(select)
             return redirect(login)
         except:
             return redirect(login)
@@ -122,7 +122,13 @@ def test(request):
 
 
 def select(request):
-    return render(request, 'server/select.html',forcast(request));
+    context=forcast(request)
+    print(Record.objects.filter(user_id=request.session['user'],borrow_status=1).count())
+    if Record.objects.filter(user_id=request.session['user'],borrow_status=1).count()>=1:
+        context['status']='1'
+    else:
+        context['status']='0'
+    return render(request, 'server/select.html',context);
 
 def bannap(request):
     return render(request, 'server/bannap.html',forcast(request));
